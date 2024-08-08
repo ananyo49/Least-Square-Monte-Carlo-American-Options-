@@ -28,7 +28,7 @@ def laguerre_upto_k(x, k):
         return np.column_stack((f1, f2, f3, f4))
 
 def hermite_upto_k(x, k):
-    f1 = 1
+    f1 = np.ones_like(x)
     f2 = 2 * x
     f3 = 4 * (x**2) - 2
     f4 = 8 * (x**3) - 12 * x
@@ -40,7 +40,7 @@ def hermite_upto_k(x, k):
         return np.column_stack((f1, f2, f3, f4))
 
 def monomials_upto_k(x, k):
-    f1 = 1
+    f1 = np.ones_like(x)
     f2 = x
     f3 = x**2
     f4 = x**3
@@ -86,7 +86,7 @@ def american_put_price_lsmc(s0, r, sig, paths, timesteps, T, func, strike, k):
         index[ev > ecv, j] = 1
         index[ev <= ecv, j] = 0
         Y[:, j] = np.maximum(ev, Y[:, j])
-    payoff_each_path = np.sum(np.exp(-r * np.arange(timesteps) * delta) * index * exercisevalues, axis=1)
+    payoff_each_path = np.sum(np.exp(-r * np.arange(timesteps + 1) * delta)[:, np.newaxis].T * index * exercisevalues, axis=1)
     return np.mean(payoff_each_path)
 
 # Streamlit App
