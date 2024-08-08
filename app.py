@@ -61,7 +61,7 @@ def american_put_price_lsmc(s0, r, sig, paths, timesteps, T, func, strike, k):
     index[Y[:, -1] > 0, -1] = 1
     delta = T / timesteps
     for j in range(timesteps - 2, -1, -1):
-        Y[:, j] = np.sum(index[:, j + 1:] * np.exp(-r * np.arange(1, timesteps - j) * delta) * exercisevalues[:, j + 1:], axis=1)
+        Y[:, j] = np.sum(index[:, j + 1:] * np.exp(-r * np.arange(1, timesteps - j + 1) * delta) * exercisevalues[:, j + 1:], axis=1)
         exercise_positions = np.where(Y[:, j] == 0)[0]
         index[exercise_positions, j] = 1
         Y[exercise_positions, j] = exercisevalues[exercise_positions, j]
@@ -86,7 +86,8 @@ def american_put_price_lsmc(s0, r, sig, paths, timesteps, T, func, strike, k):
         index[ev > ecv, j] = 1
         index[ev <= ecv, j] = 0
         Y[:, j] = np.maximum(ev, Y[:, j])
-    payoff_each_path = np.sum(np.exp(-r * np.arange(timesteps + 1) * delta)[:, np.newaxis].T * index * exercisevalues, axis=1)
+    discount_factors = np.exp(-r * np.arange(0, timesteps + 1) * delta)
+    payoff_each_path = np.sum(index * exercisevalues * discount_factors[:index.shape[1]], axis=1)
     return np.mean(payoff_each_path)
 
 # Streamlit App
