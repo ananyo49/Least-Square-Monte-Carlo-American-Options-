@@ -94,6 +94,8 @@ def american_put_price_lsmc(s0, r, sig, paths, timesteps, T, func, strike, k):
 st.sidebar.title("About Me")
 st.sidebar.write("I'm Ananya Srivastava! I'm an undergraduate student studying Data Science & Applied Statistics at Purdue University. Feel free to checkout the following!")
 
+st.sidebar.markdown('GitHub Repo for this Project: \n\n\n https://github.com/ananyo49/Least-Square-Monte-Carlo-American-Options-')
+
 st.sidebar.markdown('GitHub: \n\n\n https://github.com/ananyo49')
 st.sidebar.markdown('LinkedIn: \n\n\n https://www.linkedin.com/in/ananya49/')
 st.title('American Option Pricing Using LSMC Method')
