@@ -1,7 +1,5 @@
 import streamlit as st
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 
 # Function to generate stock paths
 def stock_path_generator(s0, r, sig, paths, timesteps, T):
@@ -21,6 +19,30 @@ def laguerre_upto_k(x, k):
     f2 = f1 * (1 - x)
     f3 = f1 * (1 - 2 * x + 0.5 * x**2)
     f4 = f1 * (1 - 3 * x + 1.5 * x**2 - x**3 / 6)
+    if k == 2:
+        return np.column_stack((f1, f2))
+    elif k == 3:
+        return np.column_stack((f1, f2, f3))
+    elif k == 4:
+        return np.column_stack((f1, f2, f3, f4))
+
+def hermite_upto_k(x, k):
+    f1 = 1
+    f2 = 2 * x
+    f3 = 4 * (x**2) - 2
+    f4 = 8 * (x**3) - 12 * x
+    if k == 2:
+        return np.column_stack((f1, f2))
+    elif k == 3:
+        return np.column_stack((f1, f2, f3))
+    elif k == 4:
+        return np.column_stack((f1, f2, f3, f4))
+
+def monomials_upto_k(x, k):
+    f1 = 1
+    f2 = x
+    f3 = x**2
+    f4 = x**3
     if k == 2:
         return np.column_stack((f1, f2))
     elif k == 3:
